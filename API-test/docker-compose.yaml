@@ -1,0 +1,38 @@
+version: '3'  # compose file syntax
+
+services:
+  backend-server:
+    container_name: test-backend-server
+    hostname: test-backend-server
+    image: api-test:backend-server
+    build:
+      context: ./backend-server
+      dockerfile: DockerFile
+    volumes:
+      - ./backend-server/src:/src
+      - ./s3:/src/s3
+    ports:
+      - 8000:8000
+    networks:
+      - global
+      - dev-backend
+
+  frontend-server:
+    container_name: test-frontend-server
+    hostname: test-frontend-server
+    image: api-test:frontend-server
+    build:
+      context: ./frontend-server
+      dockerfile: DockerFile
+    volumes:
+      - ./frontend-server/src:/src
+    ports:
+      - 8880:8888
+    networks:
+      - global
+      - dev-backend
+
+networks:
+  global:
+  dev-backend:
+    driver: bridge

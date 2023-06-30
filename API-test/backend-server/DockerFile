@@ -1,0 +1,14 @@
+From python:3.7
+
+WORKDIR ./src
+
+RUN pip install fastapi=="0.74.1" \
+ uvicorn["standard"]=="0.17.5" \
+ requests=="2.27.1" \
+ scikit-learn \
+ joblib \
+ pandas
+
+# CMD sleep infinity
+CMD python iris_model.py
+CMD uvicorn main:app --host 0.0.0.0 --reload
